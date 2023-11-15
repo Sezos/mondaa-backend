@@ -1,0 +1,117 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRoleType {
+  Admin
+  Manager
+  Leader
+  Employee
+}
+
+enum Status {
+  InUse
+  Deleted
+}
+
+enum RegisterStatus {
+  Pending
+  Verified
+  Completed
+  Approved
+  Suspended
+}
+
+model User {
+  id                Int               @id @default(autoincrement())
+  firstName         String
+  lastName          String
+  nickName          String?
+  avatar            String?           @db.VarChar(40)
+  PhotoID           String?           @db.VarChar(40)
+  PhotoIDBack       String?           @db.VarChar(40)
+  OtherCard         String?           @db.VarChar(40)
+  workWhiteCardBack String?           @db.VarChar(40)
+  email             String            @unique
+  password          String
+  phone             String?           @db.VarChar(30)
+  address           String?           @db.VarChar(255)
+  emergencyPhone    String?           @db.VarChar(30)
+  emergencyName     String?
+  emergencyEmail    String?
+  accountBSB        String?           @db.VarChar(20)
+  accountNumber     String?           @db.VarChar(30)
+  accountName       String?
+  workWhiteCard     String?           @db.VarChar(40)
+  workABN           String?           @db.VarChar(40)
+  workTFN           String?           @db.VarChar(40)
+  workVisaType      String?           @db.VarChar(40)
+  role              UserRoleType      @default(Employee)
+  status            RegisterStatus    @default(Pending)
+  isReviewed        Int               @default(0)
+  fcmToken          String?           @db.VarChar(255)
+  link              String?           @db.VarChar(26)
+  linkDate          DateTime?
+  experience        String?           @db.VarChar(40)
+  position          String?           @db.VarChar(40)
+  employeeId        String?           @db.VarChar(4)
+  isGST             Boolean?
+  rate              Int?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  ProjectUsers      ProjectUser[]
+  formanAt          ProjectLocation[]
+  workHour          workHours[]
+}
+
+model ProjectLocation {
+  id        Int       @id @default(autoincrement())
+  name      String
+  location  String
+  formanId  Int
+  Forman    User?     @relation(fields: [formanId], references: [id])
+  status    Status    @default(InUse)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Project   Project[]
+}
+
+model Project {
+  id                Int              @id @default(autoincrement())
+  date              DateTime
+  ProjectUsers      ProjectUser[]
+  status            Status           @default(InUse)
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  ProjectLocation   ProjectLocation? @relation(fields: [projectLocationId], references: [id])
+  projectLocationId Int?
+  workHour          workHours[]
+  comment           String?
+}
+
+model ProjectUser {
+  id        Int      @id @default(autoincrement())
+  projectId Int
+  Project   Project  @relation(fields: [projectId], references: [id])
+  userId    Int
+  User      User     @relation(fields: [userId], references: [id])
+  status    Status   @default(InUse)
+  workHours Float    @default(0.0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model workHours {
+  id        Int     @id @default(autoincrement())
+  projectId Int
+  Project   Project @relation(fields: [projectId], references: [id])
+  userId    Int
+  User      User    @relation(fields: [userId], references: [id])
+  rate      Float   @default(0.0)
+  hours     Float   @default(0.0)
+}
