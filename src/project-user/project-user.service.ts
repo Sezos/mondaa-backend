@@ -52,9 +52,10 @@ export class ProjectUserService {
     });
   }
 
-  async removeMany(data: { projectUserIds: number[] }) {
+  async removeMany(data: { projectUserIds: number[]; projectId: number }) {
     return await this.prisma.projectUser.updateMany({
       where: {
+        projectId: data.projectId,
         userId: { in: data.projectUserIds },
       },
       data: {

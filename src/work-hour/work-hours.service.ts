@@ -174,6 +174,8 @@ export class WorkHourService {
   async createExcel(
     headers: Partial<excel.Column>[],
     rows: any[],
+    from: string,
+    to: string,
   ): Promise<Buffer> {
     const workbook: excel.stream.xlsx.WorkbookWriter =
       new excel.stream.xlsx.WorkbookWriter({});
@@ -184,7 +186,7 @@ export class WorkHourService {
       sheet.addRow(rows[i]);
       sum += parseFloat(rows[i]['salary']);
     }
-    sheet.addRow(['', '', '', '', '', 'Total: ', sum]);
+    sheet.addRow(['from: ', from, 'to:', to, '', 'Total: ', sum]);
     sheet.commit();
     return new Promise((resolve, reject): void => {
       workbook
@@ -227,6 +229,8 @@ export class WorkHourService {
         { header: 'salary', key: 'salary' },
       ],
       data,
+      query.from,
+      query.to,
     );
 
     const name = `Salary_${query.from}_${query.to}.xlsx`;

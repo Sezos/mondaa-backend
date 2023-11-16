@@ -158,6 +158,7 @@ export class ProjectService {
     const ProjectUsersz = await this.projectUser.getByProjectId(id);
 
     await this.projectUser.removeMany({
+      projectId: id,
       projectUserIds: ProjectUsersz.map((user) => user.id),
     });
 

@@ -35,7 +35,7 @@ export class ProjectUserController {
   // }
 
   @Post('/delete')
-  removeMany(@Body() data: { projectUserIds: number[] }) {
+  removeMany(@Body() data: { projectId: number; projectUserIds: number[] }) {
     return this.projectUserService.removeMany(data);
   }
 }
