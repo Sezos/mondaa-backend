@@ -27,7 +27,9 @@ export class AuthService {
       return result;
     }
   }
-  // async test() {
-  // await this.workHours.update();
+  // async test(data) {
+  //   const sth = await this.prisma.workHours.createMany({ data });
+  //   console.log(sth);
+  //   return sth;
   // }
 }

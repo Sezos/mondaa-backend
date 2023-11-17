@@ -21,8 +21,8 @@ export class AuthController {
 
   // @Post('test')
   // @Public()
-  // test(@Body() body: { title: string; body: string; userIds: [] }) {
-  //   return this.notificationService.send(body.title, body.body, body.userIds);
+  // test(@Body() body: any) {
+  //   return this.authService.test(body.data);
   // }
 
   @Get('check')
