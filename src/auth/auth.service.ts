@@ -16,7 +16,7 @@ export class AuthService {
 
   async login(email: string, password: string) {
     const result = await this.usersService.findOne(email, password);
-    if (result.success) {
+    if (result?.success) {
       const jwt = await this.jwtTokenService.sign(result.user);
       return {
         ...result,

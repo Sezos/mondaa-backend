@@ -11,6 +11,8 @@ import { UserModule } from './user/user.module';
 // import { StateModule } from './state/state.module';
 import { ProjectLocationModule } from './project_location/projectLocation.module';
 import { NotificationService } from './services/notification.service';
+import { EventsGateway } from './events/events.gateway';
+import { ChatModule } from './Chat/chat.module';
 
 @Module({
   imports: [
@@ -21,10 +23,10 @@ import { NotificationService } from './services/notification.service';
     ProjectLocationModule,
     ProjectUserModule,
     WorkHourModule,
-
+    ChatModule,
     // StateModule,
   ],
   controllers: [AppController],
-  providers: [AppService, PrismaService, NotificationService],
+  providers: [AppService, PrismaService, NotificationService, EventsGateway],
 })
 export class AppModule {}

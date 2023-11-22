@@ -43,6 +43,9 @@ export class ProjectUserService {
     return this.prisma.projectUser.findMany({
       where: {
         projectId: ProjectId,
+        User: {
+          status: 'Verified',
+        },
       },
       select: {
         id: true,
@@ -74,6 +77,9 @@ export class ProjectUserService {
           },
           status: 'InUse',
         },
+        User: {
+          status: 'Verified',
+        },
         status: 'InUse',
       },
       select: {
@@ -93,6 +99,9 @@ export class ProjectUserService {
             lte: `${to}T23:59:59Z`,
           },
           status: 'InUse',
+        },
+        User: {
+          status: 'Verified',
         },
         status: 'InUse',
       },

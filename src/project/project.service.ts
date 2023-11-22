@@ -95,6 +95,9 @@ export class ProjectService {
         ProjectUsers: {
           where: {
             status: 'InUse',
+            User: {
+              status: 'Verified',
+            },
           },
         },
       },
@@ -117,6 +120,9 @@ export class ProjectService {
         ProjectUsers: {
           where: {
             status: 'InUse',
+            User: {
+              status: 'Verified',
+            },
           },
           select: {
             id: true,

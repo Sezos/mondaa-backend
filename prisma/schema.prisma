@@ -115,3 +115,12 @@ model workHours {
   rate      Float   @default(0.0)
   hours     Float   @default(0.0)
 }
+
+model Message {
+  id         Int      @id @default(autoincrement())
+  body       String?  @default("")
+  mediaURL   String?
+  TimeStamp  DateTime @default(now())
+  senderId   Int
+  recieverId Int
+}
