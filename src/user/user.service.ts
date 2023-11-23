@@ -323,6 +323,9 @@ export class UserService {
         role: true,
         rate: true,
         employeeId: true,
+        emergencyEmail: true,
+        emergencyName: true,
+        emergencyPhone: true,
       },
       orderBy: {
         firstName: 'asc',
