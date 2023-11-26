@@ -58,7 +58,6 @@ export class WorkHourService {
   }
 
   async getTotal(query: any) {
-    console.log(query);
     if (query.employeeId <= 0) delete query.employeeId;
     const employees = await this.userService.employees();
     const datas = await this.prisma.workHours.findMany({
