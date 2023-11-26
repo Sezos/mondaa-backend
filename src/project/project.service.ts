@@ -74,7 +74,7 @@ export class ProjectService {
         },
       };
     }
-    return await this.prisma.project.findMany({
+    const data = await this.prisma.project.findMany({
       where: {
         status: 'InUse',
         date: {
@@ -102,6 +102,8 @@ export class ProjectService {
         },
       },
     });
+
+    return data;
   }
 
   async findOne(id: number) {

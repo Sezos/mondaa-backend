@@ -90,6 +90,17 @@ export class WorkHourService {
             employeeId: true,
           },
         },
+        Project: {
+          select: {
+            ProjectLocation: {
+              select: {
+                name: true,
+                id: true,
+                location: true,
+              },
+            },
+          },
+        },
       },
     });
 
@@ -108,6 +119,7 @@ export class WorkHourService {
           rate: workHours[0].rate || 0,
           isGST: workHours[0].User.isGST || 0,
           User: workHours[0].User,
+          Project: workHours[0].Project,
           workHours: 0,
           total: 0,
           salary: '',
@@ -117,7 +129,9 @@ export class WorkHourService {
           total.total += workHour.hours * workHour.rate;
           total.workHours += workHour.hours;
         });
+
         total.salary = (total.total * (total.isGST ? 1.1 : 1)).toFixed();
+
         result.push(total);
       }
     });
