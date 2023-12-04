@@ -280,7 +280,6 @@ export class UserService {
         avatar: true,
         email: true,
         role: true,
-        password: true,
         status: true,
         isReviewed: true,
         rate: true,

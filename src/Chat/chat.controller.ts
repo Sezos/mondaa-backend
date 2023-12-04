@@ -1,7 +1,6 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Get, Query, Request } from '@nestjs/common';
 import { NotificationService } from 'src/services/notification.service';
 import { ChatService } from './chat.service';
-import { Message } from '@prisma/client';
 
 @Controller('chat')
 export class ChatController {
@@ -10,11 +9,31 @@ export class ChatController {
     private notificationService: NotificationService,
   ) {}
 
-  @Post('sendMessage')
+  @Post('/')
   send(
+    @Request()
+    request,
     @Body()
-    body: Message,
+    body: {
+      body: string;
+      groupId: string;
+    },
   ) {
-    return this.chatService.sendMessage(body);
+    return this.chatService.sendMessage({
+      body: body.body,
+      groupId: parseInt(body.groupId),
+      senderId: parseInt(request.user.id),
+    });
+  }
+
+  @Get('/')
+  getMessages(
+    @Query()
+    query: {
+      groupId: string;
+      offset: string;
+    },
+  ) {
+    return this.chatService.getMessages(query.groupId, query.offset);
   }
 }

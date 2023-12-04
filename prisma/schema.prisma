@@ -67,6 +67,7 @@ model User {
   ProjectUsers      ProjectUser[]
   formanAt          ProjectLocation[]
   workHour          workHours[]
+  ChatGroupUser     ChatGroupUser[]
 }
 
 model ProjectLocation {
@@ -117,10 +118,26 @@ model workHours {
 }
 
 model Message {
-  id         Int      @id @default(autoincrement())
-  body       String?  @default("")
-  mediaURL   String?
-  TimeStamp  DateTime @default(now())
-  senderId   Int
-  recieverId Int
+  id        Int      @id @default(autoincrement())
+  body      String?  @default("")
+  mediaURL  String?
+  TimeStamp DateTime @default(now())
+  senderId  Int
+  groupId   Int
+}
+
+model ChatGroups {
+  id            Int             @id @default(autoincrement())
+  name          String
+  created_at    DateTime        @default(now())
+  status        Status          @default(InUse)
+  ChatGroupUser ChatGroupUser[]
+}
+
+model ChatGroupUser {
+  id      Int        @id @default(autoincrement())
+  userId  Int
+  groupId Int
+  User    User       @relation(fields: [userId], references: [id])
+  Group   ChatGroups @relation(fields: [groupId], references: [id])
 }

@@ -13,6 +13,8 @@ import { ProjectLocationModule } from './project_location/projectLocation.module
 import { NotificationService } from './services/notification.service';
 import { EventsGateway } from './events/events.gateway';
 import { ChatModule } from './Chat/chat.module';
+import { GroupModule } from './group/group.module';
+import { GroupUserModule } from './group-user/group-user.module';
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { ChatModule } from './Chat/chat.module';
     ProjectUserModule,
     WorkHourModule,
     ChatModule,
+    GroupModule,
+    GroupUserModule,
     // StateModule,
   ],
   controllers: [AppController],

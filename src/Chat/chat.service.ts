@@ -1,5 +1,4 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { Message } from '@prisma/client';
 import { EventsGateway } from 'src/events/events.gateway';
 import { PrismaService } from 'src/services/prisma.service';
 // import { UserService } from 'src/user/user.service';
@@ -12,10 +11,44 @@ export class ChatService {
     private eventsGateway: EventsGateway,
     private prismaService: PrismaService,
   ) {}
+  async getMessages(groupId: string, offset: string) {
+    try {
+      return await this.prismaService.message.findMany({
+        where: {
+          groupId: parseInt(groupId),
+        },
+        skip: parseInt(offset),
+        take: 20,
+        orderBy: {
+          id: 'desc',
+        },
+      });
+    } catch (error) {
+      Logger.log(error);
+      return {
+        status: 400,
+        body: error,
+      };
+    }
+  }
 
-  async sendMessage(message: Message) {
-    const sth = await this.prismaService.message.create({ data: message });
-    Logger.log(sth);
-    return await this.eventsGateway.sendMessage(message);
+  async sendMessage(message: {
+    groupId: number;
+    senderId: number;
+    body: string;
+  }) {
+    try {
+      const sth = await this.prismaService.message.create({
+        data: {
+          groupId: message.groupId,
+          senderId: message.senderId,
+          body: message.body,
+        },
+      });
+      Logger.log(sth);
+      return await this.eventsGateway.sendMessage(message);
+    } catch (err) {
+      console.log(err);
+    }
   }
 }

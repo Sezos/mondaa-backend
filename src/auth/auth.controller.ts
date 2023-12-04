@@ -18,7 +18,6 @@ export class AuthController {
   ) {
     return this.authService.login(email, password);
   }
-
   // @Post('test')
   // @Public()
   // test(@Body() body: any) {

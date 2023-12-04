@@ -17,21 +17,22 @@ export class WsJwtGuard implements CanActivate {
     if (context.getType() !== 'ws') return true;
 
     const client: Socket = context.switchToWs().getClient();
-    const { authorization } = client.handshake.headers;
-
-    Logger.log(authorization, 'I got the auth');
+    console.log(client.handshake.auth);
     WsJwtGuard.validateToken(client);
     return true;
   }
 
-  static validateToken(client: Socket) {
-    const { authorization } = client.handshake.headers;
+  static async validateToken(client: Socket) {
+    try {
+      const authorization = await client.handshake.auth.token._j;
+      Logger.log(client.handshake, authorization);
 
-    Logger.log(authorization);
-
-    const token: string = authorization.split(' ')[1];
-    const payload = verify(token, jwtConstants.secret);
-
-    return payload;
+      // const token: string = authorization.split(' ')[1];
+      const payload = verify(authorization, jwtConstants.secret);
+      console.log('isOkay', payload);
+      return payload;
+    } catch (err) {
+      console.log(err);
+    }
   }
 }

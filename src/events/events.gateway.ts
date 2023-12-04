@@ -1,11 +1,10 @@
-import { Logger, UseGuards } from '@nestjs/common';
+import { UseGuards } from '@nestjs/common';
 import {
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
 
-import { Message } from '@prisma/client';
 import { Server, Socket } from 'socket.io';
 import { WsJwtGuard } from 'src/auth/ws-jwt/ws-jwt.guard';
 import { SocketAuthMiddleWare } from 'src/auth/ws.mw';
@@ -25,7 +24,6 @@ export class EventsGateway {
 
   afterInit(client: Socket) {
     client.use(SocketAuthMiddleWare() as any);
-    Logger.log('afterInit');
   }
 
   @SubscribeMessage('message')
@@ -33,12 +31,14 @@ export class EventsGateway {
     return 'Hello world!';
   }
 
-  async sendMessage(message: Message) {
-    this.server.emit('newMessage', message);
+  async sendMessage(message: any) {
+    console.log(message);
+    this.server.emit('group_' + message.groupId, message);
+
     const sender = await this.userService.findOneById(message.senderId);
 
     this.notificationService.send(sender.firstName, message.body, [
-      message.recieverId,
+      message.groupId,
     ]);
   }
 }
