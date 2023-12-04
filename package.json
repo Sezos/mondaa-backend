@@ -8,7 +8,7 @@
   "scripts": {
     "pm2": "NODE_ENV=production pm2 start build/server.js --watch -i max",
     "prebuild": "rimraf dist",
-    "build": "nest build",
+    "build": "npx prisma generate && nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "npx prisma generate && nest start",
     "dev": "npx prisma generate && nest start --watch",
