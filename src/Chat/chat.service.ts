@@ -1,15 +1,14 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { EventsGateway } from 'src/events/events.gateway';
+import { NotificationService } from 'src/services/notification.service';
 import { PrismaService } from 'src/services/prisma.service';
-// import { UserService } from 'src/user/user.service';
-// import { NotificationService } from 'src/services/notification.service';
-// import { WorkHourService } from 'src/work-hour/work-hours.service';
 
 @Injectable()
 export class ChatService {
   constructor(
     private eventsGateway: EventsGateway,
     private prismaService: PrismaService,
+    private notificationService: NotificationService,
   ) {}
   async getMessages(groupId: string, offset: string) {
     try {
@@ -46,6 +45,13 @@ export class ChatService {
         },
       });
       Logger.log(sth);
+
+      this.notificationService.sendGroupUsers(
+        message.senderId,
+        message.body,
+        message.groupId,
+      );
+
       return await this.eventsGateway.sendMessage(message);
     } catch (err) {
       console.log(err);

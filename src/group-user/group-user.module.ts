@@ -8,5 +8,6 @@ import { UserModule } from 'src/user/user.module';
   imports: [UserModule],
   controllers: [GroupUserController],
   providers: [GroupUserService, PrismaService],
+  exports: [GroupUserService],
 })
 export class GroupUserModule {}

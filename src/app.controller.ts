@@ -17,6 +17,11 @@ export class AppController {
     return this.appService.getHello();
   }
 
+  @Post('check')
+  @Public()
+  CheckHealth(@Body() body: { version: string }) {
+    return this.appService.checkHealth(body.version);
+  }
   @Get('base')
   @Public()
   base() {

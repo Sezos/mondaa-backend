@@ -283,6 +283,7 @@ export class UserService {
         status: true,
         isReviewed: true,
         rate: true,
+        fcmToken: true,
       },
     });
     return user;

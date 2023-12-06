@@ -8,6 +8,8 @@ import { JwtStrategy } from './jwt.strategy';
 import { AuthController } from './auth.controller';
 import { NotificationService } from 'src/services/notification.service';
 import { WorkHourModule } from 'src/work-hour/work-hours.module';
+import { GroupUserService } from 'src/group-user/group-user.service';
+import { PrismaService } from 'src/services/prisma.service';
 
 @Module({
   imports: [
@@ -16,7 +18,13 @@ import { WorkHourModule } from 'src/work-hour/work-hours.module';
     WorkHourModule,
     JwtModule.register(jwtConstants),
   ],
-  providers: [AuthService, JwtStrategy, NotificationService],
+  providers: [
+    AuthService,
+    JwtStrategy,
+    NotificationService,
+    GroupUserService,
+    PrismaService,
+  ],
   exports: [AuthService],
   controllers: [AuthController],
 })
