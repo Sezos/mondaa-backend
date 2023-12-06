@@ -68,6 +68,7 @@ model User {
   formanAt          ProjectLocation[]
   workHour          workHours[]
   ChatGroupUser     ChatGroupUser[]
+  Files             Files[]
 }
 
 model ProjectLocation {
@@ -140,4 +141,18 @@ model ChatGroupUser {
   groupId Int
   User    User       @relation(fields: [userId], references: [id])
   Group   ChatGroups @relation(fields: [groupId], references: [id])
+}
+
+model Files {
+  id            Int     @id @default(autoincrement())
+  name          String  @db.VarChar(255)
+  url           String? @db.VarChar(255)
+  ownerId       Int     @default(8)
+  thumbnail_url String? @db.VarChar(255)
+  isFolder      Boolean @default(false)
+  Owner         User    @relation(fields: [ownerId], references: [id])
+  parentId      Int     @default(0)
+  children      Files[] @relation("Parent")
+  parent        Files   @relation("Parent", fields: [parentId], references: [id])
+  status        Status  @default(InUse)
 }

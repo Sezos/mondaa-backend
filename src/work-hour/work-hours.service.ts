@@ -14,7 +14,7 @@ export class WorkHourService {
     private notificationService: NotificationService,
   ) {}
 
-  async get({ query, selection }) {
+  async get(query: any, selection: any) {
     return this.prisma.workHours.findMany({
       where: query,
       select: selection,

@@ -37,9 +37,12 @@ export class WorkHourController {
   @Post('getMany')
   getWorkHours(
     @Body()
-    data: any,
+    data: {
+      query: any;
+      selection: any;
+    },
   ) {
-    return this.workHourService.get(data);
+    return this.workHourService.get(data.query, data.selection);
   }
 
   @Get('getTotal')

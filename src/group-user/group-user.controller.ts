@@ -14,8 +14,8 @@ export class GroupUserController {
   constructor(private readonly groupUserService: GroupUserService) {}
 
   @Post()
-  create(@Body() body: { groupId: number; users: number[] }) {
-    return this.groupUserService.create(body.groupId, body.users);
+  create(@Body() body: { groupId: number; usersIds: number[] }) {
+    return this.groupUserService.create(body.groupId, body.usersIds);
   }
 
   @Get(':id')

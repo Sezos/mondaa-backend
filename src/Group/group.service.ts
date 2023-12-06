@@ -87,6 +87,11 @@ export class GroupService {
       });
     } catch (error) {
       Logger.log(error);
+      return {
+        success: false,
+        message: 'Unsuccessful',
+        error: error,
+      };
     }
   }
 }

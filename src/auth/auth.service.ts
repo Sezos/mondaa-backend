@@ -15,6 +15,12 @@ export class AuthService {
   ) {}
 
   async login(email: string, password: string) {
+    if (!email || !password)
+      return {
+        success: false,
+        message: 'Email and Password are required',
+        user: null,
+      };
     const result = await this.usersService.findOne(email, password);
     if (result?.success) {
       const jwt = await this.jwtTokenService.sign(result.user);

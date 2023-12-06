@@ -29,11 +29,6 @@ export class ProjectUserController {
     return this.projectUserService.create(data);
   }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: number) {
-  //   return this.projectUserService.remove(id);
-  // }
-
   @Post('/delete')
   removeMany(@Body() data: { projectId: number; projectUserIds: number[] }) {
     return this.projectUserService.removeMany(data);

@@ -15,6 +15,7 @@ import { EventsGateway } from './events/events.gateway';
 import { ChatModule } from './Chat/chat.module';
 import { GroupModule } from './Group/group.module';
 import { GroupUserModule } from './group-user/group-user.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { GroupUserModule } from './group-user/group-user.module';
     ChatModule,
     GroupModule,
     GroupUserModule,
+    FilesModule,
     // StateModule,
   ],
   controllers: [AppController],

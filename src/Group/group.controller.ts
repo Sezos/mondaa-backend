@@ -30,7 +30,7 @@ export class GroupController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() body: any) {
+  update(@Param('id') id: string) {
     return this.groupService.update(+id);
   }
 
