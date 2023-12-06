@@ -6,6 +6,7 @@ import {
   Delete,
   Body,
   Request,
+  Patch,
 } from '@nestjs/common';
 import { FilesService } from './files.service';
 
@@ -53,6 +54,11 @@ export class FilesController {
   @Get('/:id')
   findOne(@Param('id') id: string) {
     return this.filesService.findAll(+id);
+  }
+
+  @Patch()
+  Checked(@Body() body: { ids: number[] }) {
+    return this.filesService.checked(body.ids);
   }
 
   @Delete(':id')

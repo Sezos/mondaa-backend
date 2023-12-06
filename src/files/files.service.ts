@@ -31,6 +31,7 @@ export class FilesService {
     if (!isFolder) {
       const FileURL = await this.s3Service.uploadFile('Files', file);
       if (!FileURL.success) return FileURL;
+      if (!FileURL.success) return FileURL;
       return this.prismaService.files.create({
         data: {
           isFolder,
@@ -87,11 +88,26 @@ export class FilesService {
     }
   }
 
+  async checked(ids: number[]) {
+    try {
+      return await this.prismaService.files.updateMany({
+        where: {
+          id: { in: ids },
+        },
+        data: {
+          isChecked: true,
+        },
+      });
+    } catch (err) {
+      Logger.error(err);
+    }
+  }
+
   async remove(id: number) {
     try {
-      return await this.prismaService.files.update({
+      return await this.prismaService.files.updateMany({
         where: {
-          id,
+          OR: [{ id: id }, { parentId: id }],
         },
         data: {
           status: 'Deleted',

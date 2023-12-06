@@ -155,4 +155,5 @@ model Files {
   children      Files[] @relation("Parent")
   parent        Files   @relation("Parent", fields: [parentId], references: [id])
   status        Status  @default(InUse)
+  isChecked     Boolean @default(false)
 }
