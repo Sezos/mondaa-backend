@@ -59,7 +59,7 @@ export class NotificationService {
       const title = (await this.userService.findOneById(senderId)).firstName;
 
       const users = groupUsers.filter(
-        (groupUser) => groupUser.fcmToken !== null,
+        (groupUser) => groupUser.fcmToken !== null && groupUser.id !== senderId,
       );
 
       users.map(async (user: any) => {
