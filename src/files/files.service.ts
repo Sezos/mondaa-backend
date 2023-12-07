@@ -66,6 +66,7 @@ export class FilesService {
           name: true,
           isFolder: true,
           url: true,
+          isChecked: true,
         },
       });
     } catch (err) {
