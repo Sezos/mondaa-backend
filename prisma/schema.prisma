@@ -156,4 +156,5 @@ model Files {
   parent        Files   @relation("Parent", fields: [parentId], references: [id])
   status        Status  @default(InUse)
   isChecked     Boolean @default(false)
+  comment       String? @db.VarChar(255)
 }
