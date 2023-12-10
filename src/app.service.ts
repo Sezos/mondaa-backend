@@ -15,7 +15,7 @@ export class AppService {
       };
     }
 
-    if (version !== process.env.APP_LATEST_VERSION) {
+    if (version !== version) {
       return {
         success: true,
         message:
