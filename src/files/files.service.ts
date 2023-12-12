@@ -104,6 +104,28 @@ export class FilesService {
     }
   }
 
+  async checkOne(id: number) {
+    console.log(id);
+    try {
+      const data = await this.prismaService.files.findFirst({
+        where: {
+          id,
+        },
+      });
+      console.log(data);
+      return await this.prismaService.files.update({
+        where: {
+          id: id,
+        },
+        data: {
+          isChecked: !data.isChecked,
+        },
+      });
+    } catch (err) {
+      Logger.error(err);
+    }
+  }
+
   async remove(id: number) {
     try {
       return await this.prismaService.files.updateMany({

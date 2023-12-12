@@ -61,6 +61,11 @@ export class FilesController {
     return this.filesService.checked(body.ids);
   }
 
+  @Patch('/:id')
+  CheckOne(@Param('id') id: string) {
+    return this.filesService.checkOne(+id);
+  }
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.filesService.remove(+id);
