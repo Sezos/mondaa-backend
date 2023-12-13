@@ -33,6 +33,7 @@ model User {
   lastName          String
   nickName          String?
   avatar            String?           @db.VarChar(40)
+  old_avatar        String?           @db.VarChar(40)
   PhotoID           String?           @db.VarChar(40)
   PhotoIDBack       String?           @db.VarChar(40)
   OtherCard         String?           @db.VarChar(40)

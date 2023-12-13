@@ -18,11 +18,6 @@ export class AuthController {
   ) {
     return this.authService.login(email, password);
   }
-  // @Post('test')
-  // @Public()
-  // test(@Body() body: any) {
-  //   return this.authService.test(body.data);
-  // }
 
   @Get('check')
   getUserInfo(@Request() request) {
