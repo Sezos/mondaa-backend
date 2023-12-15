@@ -26,6 +26,7 @@ export class GroupUserService {
       const groupUsers = await this.prismaService.chatGroupUser.findMany({
         where: {
           groupId,
+          status: 'InUse',
         },
       });
 

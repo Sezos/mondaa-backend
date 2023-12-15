@@ -95,7 +95,6 @@ export class NotificationService {
   async sendNotiOff(date: string) {
     try {
       const users = await this.userService.employeesOff(date);
-      console.log(users);
       this.send(
         'You are OFF Tomorrow',
         'Unfortunately, you were not assigned to any job tomorrow.',

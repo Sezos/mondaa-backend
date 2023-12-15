@@ -37,14 +37,13 @@ export class ChatService {
     body: string;
   }) {
     try {
-      const sth = await this.prismaService.message.create({
+      await this.prismaService.message.create({
         data: {
           groupId: message.groupId,
           senderId: message.senderId,
           body: message.body,
         },
       });
-      Logger.log(sth);
 
       this.notificationService.sendGroupUsers(
         message.senderId,
@@ -52,9 +51,16 @@ export class ChatService {
         message.groupId,
       );
 
-      return await this.eventsGateway.sendMessage(message);
+      return {
+        success: true,
+        data: await this.eventsGateway.sendMessage(message),
+      };
     } catch (err) {
-      console.log(err);
+      return {
+        success: false,
+        message:
+          'There was something wrong with the server. Please try again later',
+      };
     }
   }
 }

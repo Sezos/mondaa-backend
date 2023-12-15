@@ -30,8 +30,26 @@ export class GroupController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string) {
-    return this.groupService.update(+id);
+  update(
+    @Param('id') id: string,
+    @Body()
+    body: {
+      name?: string;
+      addUserIds?: number[];
+      removeUserIds?: number[];
+    },
+  ) {
+    return this.groupService.update(
+      +id,
+      body.name,
+      body.addUserIds,
+      body.removeUserIds,
+    );
+  }
+
+  @Post(':id')
+  async setImage(@Param('id') id: string, @Body() data: { image: string }) {
+    return this.groupService.setImage(+id, data.image);
   }
 
   @Delete(':id')

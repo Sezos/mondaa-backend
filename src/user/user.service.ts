@@ -121,8 +121,6 @@ export class UserService {
         },
       });
 
-      console.log(user);
-
       await this.mailService.sendUserCode(user);
     }
     return {

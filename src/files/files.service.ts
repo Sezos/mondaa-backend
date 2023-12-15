@@ -1,6 +1,7 @@
 import { S3Service } from './../services/s3.service';
 import { PrismaService } from 'src/services/prisma.service';
 import { Injectable, Logger } from '@nestjs/common';
+import * as sharp from 'sharp';
 
 @Injectable()
 export class FilesService {
@@ -28,10 +29,27 @@ export class FilesService {
         message: 'Please Provide File',
       };
     }
+
     if (!isFolder) {
+      const imageBuffer = Buffer.from(
+        file.replace(/^data:image\/\w+;base64,/, ''),
+        'base64',
+      );
+
+      const thumbnail = await sharp(imageBuffer)
+        .resize({ width: 200 })
+        .toBuffer();
+
+      const base64Thumbnail = thumbnail.toString('base64');
+
       const FileURL = await this.s3Service.uploadFile('Files', file);
+      const thumbnail_url = await this.s3Service.uploadFile(
+        'Thumbnails',
+        base64Thumbnail,
+      );
+      if (!thumbnail_url.success) return thumbnail_url;
       if (!FileURL.success) return FileURL;
-      if (!FileURL.success) return FileURL;
+
       return this.prismaService.files.create({
         data: {
           isFolder,
@@ -39,6 +57,7 @@ export class FilesService {
           ownerId,
           parentId,
           url: FileURL.response.Key,
+          thumbnail_url: thumbnail_url.response.Key,
         },
       });
     } else {

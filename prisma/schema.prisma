@@ -133,6 +133,7 @@ model ChatGroups {
   name          String
   created_at    DateTime        @default(now())
   status        Status          @default(InUse)
+  imgURL        String?
   ChatGroupUser ChatGroupUser[]
 }
 
@@ -140,6 +141,7 @@ model ChatGroupUser {
   id      Int        @id @default(autoincrement())
   userId  Int
   groupId Int
+  status  Status     @default(InUse)
   User    User       @relation(fields: [userId], references: [id])
   Group   ChatGroups @relation(fields: [groupId], references: [id])
 }
