@@ -1319,7 +1319,8 @@
 
 "@types/express@*", "@types/express@types/express":
   version "4.14.0"
-  resolved "git+ssh://git@github.com/types/express.git#7670cf1cbce96b3159e3ff04a253926b34111220"
+  resolved "git+ssh://git@github.com/types/express.git"
+  integrity sha512-FBBsOhBds1N1QZU2mi23myvM7cJ/qumj1pqbweItyW4xZu2Pu4KFDyV4uxj2lwQT8nbd3kK3W5mrsSiGRoDsCQ==
   dependencies:
     "@types/serve-static" "github:types/npm-serve-static#c1f96843c8b96a37f6c534cb1dadb48f5329e4e0"
     path-to-regexp "github:pillarjs/path-to-regexp#ec285ed3500aed455df59e3b8b07f473412918a4"
@@ -1497,8 +1498,8 @@
 
 "@types/serve-static@*", "@types/serve-static@github:types/npm-serve-static#c1f96843c8b96a37f6c534cb1dadb48f5329e4e0":
   version "1.11.1"
-  resolved "git+ssh://git@github.com/types/npm-serve-static.git#c1f96843c8b96a37f6c534cb1dadb48f5329e4e0"
-  integrity sha512-WKb1nXmdYbbzeWSrySBXBITYirhOoVIgw2p7UFqeL2GwJkgbyO8GTvdU6N5uAdLQWOUgiJ14xaUueKn7lzvaaw==
+  resolved "git+ssh://git@github.com/types/npm-serve-static.git"
+  integrity sha512-jvjowXgPD/9JiONlOJB2IrkxUqX8hgOGkcMbWbdSrJA+kvNO9ak8rW4DcVdVaYMp0Yj5iJsPmlFfOBfgr51yBw==
 
 "@types/stack-utils@^2.0.0":
   version "2.0.3"
@@ -6909,11 +6910,9 @@ path-to-regexp@3.2.0:
   integrity sha512-jczvQbCUS7XmS7o+y1aEO9OBVFeZBQ1MDSEqmO7xSoPgOPoowY/SxLpZ6Vh97/8qHZOteiCKb7gkG9gA2ZUxJA==
 
 "path-to-regexp@github:pillarjs/path-to-regexp#ec285ed3500aed455df59e3b8b07f473412918a4":
-  version "1.5.3"
-  resolved "git+ssh://git@github.com/pillarjs/path-to-regexp.git#ec285ed3500aed455df59e3b8b07f473412918a4"
-  integrity sha512-6WVOfMP/nAo0bseLnmum+9JzxMcXosAnY2UfBKVjvj4R8ev+cTN3FRKtWUrMnzYZ4e/+/4Ibj180uRsElwU0pw==
-  dependencies:
-    isarray "0.0.1"
+  version "6.2.1"
+  resolved "git+ssh://git@github.com/pillarjs/path-to-regexp.git"
+  integrity sha512-QtByl2dPe4edOIrItQXMIbHKsyayhhFYrLoen2OLc5kg1jCSdkOBNgplxyi6Tco9i/kglvs6BoGHySoSFPgnmA==
 
 path-type@^4.0.0:
   version "4.0.0"

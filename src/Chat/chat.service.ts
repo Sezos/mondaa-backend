@@ -44,7 +44,7 @@ export class ChatService {
           body: message.body,
         },
       });
-
+      const msg = await this.eventsGateway.sendMessage(message);
       this.notificationService.sendGroupUsers(
         message.senderId,
         message.body,
@@ -53,7 +53,7 @@ export class ChatService {
 
       return {
         success: true,
-        data: await this.eventsGateway.sendMessage(message),
+        data: msg,
       };
     } catch (err) {
       return {

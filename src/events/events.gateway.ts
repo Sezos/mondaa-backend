@@ -37,7 +37,7 @@ export class EventsGateway {
 
     const sender = await this.userService.findOneById(message.senderId);
 
-    this.notificationService.send(sender.firstName, message.body, [
+    return await this.notificationService.send(sender.firstName, message.body, [
       message.groupId,
     ]);
   }
