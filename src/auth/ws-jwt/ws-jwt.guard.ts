@@ -24,7 +24,6 @@ export class WsJwtGuard implements CanActivate {
   static async validateToken(client: Socket) {
     try {
       const authorization = await client.handshake.auth.token._j;
-      Logger.log(client.handshake, authorization);
 
       // const token: string = authorization.split(' ')[1];
       const payload = verify(authorization, jwtConstants.secret);
