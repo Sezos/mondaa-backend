@@ -101,7 +101,6 @@ export class FilesService {
           status: 'InUse',
         },
       });
-      console.log(sth);
       return sth;
     } catch (err) {
       Logger.error(err);
@@ -124,14 +123,12 @@ export class FilesService {
   }
 
   async checkOne(id: number) {
-    console.log(id);
     try {
       const data = await this.prismaService.files.findFirst({
         where: {
           id,
         },
       });
-      console.log(data);
       return await this.prismaService.files.update({
         where: {
           id: id,

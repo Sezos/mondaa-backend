@@ -438,7 +438,7 @@ export class UserService {
     const users = await this.all();
     const usersWithJob = await this.employeesByDate(date);
     const noJobUsers = usersWithJob.map((usr) => usr.id);
-    console.log(noJobUsers);
+
     const result = users.filter((user) => !noJobUsers.includes(user.id));
 
     return result;
@@ -482,7 +482,6 @@ export class UserService {
 
   async setFcm(user: User, token: string) {
     try {
-      console.log(token);
       const sth = await this.prisma.user.update({
         where: {
           id: user.id,

@@ -17,7 +17,6 @@ export class WsJwtGuard implements CanActivate {
     if (context.getType() !== 'ws') return true;
 
     const client: Socket = context.switchToWs().getClient();
-    console.log(client.handshake.auth);
     WsJwtGuard.validateToken(client);
     return true;
   }
@@ -29,7 +28,6 @@ export class WsJwtGuard implements CanActivate {
 
       // const token: string = authorization.split(' ')[1];
       const payload = verify(authorization, jwtConstants.secret);
-      console.log('isOkay', payload);
       return payload;
     } catch (err) {
       console.log(err);
