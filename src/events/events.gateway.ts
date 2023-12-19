@@ -14,6 +14,7 @@ import { UserService } from 'src/user/user.service';
 @WebSocketGateway({
   namespace: 'events',
   cors: true,
+  transports: ['websocket'],
 })
 @UseGuards(WsJwtGuard)
 export class EventsGateway {
