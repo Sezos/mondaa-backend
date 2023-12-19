@@ -11,14 +11,16 @@ import { SocketAuthMiddleWare } from 'src/auth/ws.mw';
 import { NotificationService } from 'src/services/notification.service';
 import { UserService } from 'src/user/user.service';
 
-@WebSocketGateway({ namespace: 'events' })
+@WebSocketGateway({
+  namespace: 'events',
+  cors: true,
+})
 @UseGuards(WsJwtGuard)
 export class EventsGateway {
   constructor(
     private notificationService: NotificationService,
     private userService: UserService,
   ) {}
-
   @WebSocketServer()
   server: Server;
 
