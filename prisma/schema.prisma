@@ -70,6 +70,7 @@ model User {
   workHour          workHours[]
   ChatGroupUser     ChatGroupUser[]
   Files             Files[]
+  Message           Message[]
 }
 
 model ProjectLocation {
@@ -120,12 +121,14 @@ model workHours {
 }
 
 model Message {
-  id        Int      @id @default(autoincrement())
-  body      String?  @default("")
+  id        Int        @id @default(autoincrement())
+  body      String?    @default("")
   mediaURL  String?
-  TimeStamp DateTime @default(now())
+  TimeStamp DateTime   @default(now())
   senderId  Int
   groupId   Int
+  Sender    User       @relation(fields: [senderId], references: [id])
+  Group     ChatGroups @relation(fields: [groupId], references: [id])
 }
 
 model ChatGroups {
@@ -135,6 +138,7 @@ model ChatGroups {
   status        Status          @default(InUse)
   imgURL        String?
   ChatGroupUser ChatGroupUser[]
+  Message       Message[]
 }
 
 model ChatGroupUser {

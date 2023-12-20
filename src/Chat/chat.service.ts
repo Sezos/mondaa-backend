@@ -16,6 +16,21 @@ export class ChatService {
         where: {
           groupId: parseInt(groupId),
         },
+        select: {
+          id: true,
+          body: true,
+          mediaURL: true,
+          TimeStamp: true,
+          senderId: true,
+          groupId: true,
+          Sender: {
+            select: {
+              id: true,
+              firstName: true,
+            },
+          },
+          Group: true,
+        },
         skip: parseInt(offset),
         take: 20,
         orderBy: {
