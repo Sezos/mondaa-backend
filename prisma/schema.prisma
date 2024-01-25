@@ -145,23 +145,25 @@ model ChatGroupUser {
   id      Int        @id @default(autoincrement())
   userId  Int
   groupId Int
+  isAdmin Boolean    @default(false)
   status  Status     @default(InUse)
   User    User       @relation(fields: [userId], references: [id])
   Group   ChatGroups @relation(fields: [groupId], references: [id])
 }
 
 model Files {
-  id            Int     @id @default(autoincrement())
-  name          String  @db.VarChar(255)
-  url           String? @db.VarChar(255)
-  ownerId       Int     @default(8)
-  thumbnail_url String? @db.VarChar(255)
-  isFolder      Boolean @default(false)
-  Owner         User    @relation(fields: [ownerId], references: [id])
-  parentId      Int     @default(0)
-  children      Files[] @relation("Parent")
-  parent        Files   @relation("Parent", fields: [parentId], references: [id])
-  status        Status  @default(InUse)
-  isChecked     Boolean @default(false)
-  comment       String? @db.VarChar(255)
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+  url           String?  @db.VarChar(255)
+  ownerId       Int      @default(8)
+  thumbnail_url String?  @db.VarChar(255)
+  isFolder      Boolean  @default(false)
+  Owner         User     @relation(fields: [ownerId], references: [id])
+  parentId      Int      @default(0)
+  children      Files[]  @relation("Parent")
+  parent        Files    @relation("Parent", fields: [parentId], references: [id])
+  status        Status   @default(InUse)
+  isChecked     Boolean  @default(false)
+  comment       String?  @db.VarChar(255)
+  created_at    DateTime @default(now())
 }

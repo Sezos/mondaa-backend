@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Request,
 } from '@nestjs/common';
 import { GroupUserService } from './group-user.service';
 
@@ -29,7 +30,8 @@ export class GroupUserController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.groupUserService.remove(+id);
+  remove(@Param('id') id: string, @Request() req) {
+    console.log(id, req.user);
+    return this.groupUserService.remove(+id, req.user);
   }
 }

@@ -17,6 +17,7 @@ export class FilesService {
     file?: string,
     parentId = 1,
   ) {
+    console.log('herea1');
     if (!name || !ownerId) {
       return {
         status: 'Error',
@@ -31,16 +32,20 @@ export class FilesService {
     }
 
     if (!isFolder) {
+      console.log('herea2');
       const imageBuffer = Buffer.from(
         file.replace(/^data:image\/\w+;base64,/, ''),
         'base64',
       );
+      console.log('herea2a');
 
       const thumbnail = await sharp(imageBuffer)
         .resize({ width: 200 })
         .toBuffer();
+      console.log('herea2b');
 
       const base64Thumbnail = thumbnail.toString('base64');
+      console.log('herea2c');
 
       const FileURL = await this.s3Service.uploadFile('Files', file);
       const thumbnail_url = await this.s3Service.uploadFile(
@@ -49,6 +54,7 @@ export class FilesService {
       );
       if (!thumbnail_url.success) return thumbnail_url;
       if (!FileURL.success) return FileURL;
+      console.log('herea3');
 
       return this.prismaService.files.create({
         data: {

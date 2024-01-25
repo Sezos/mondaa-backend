@@ -9,7 +9,7 @@ export class GroupService {
     private prismaService: PrismaService,
     private s3Service: S3Service,
   ) {}
-  async create(name: string, users: number[]) {
+  async create(name: string, users: number[], creater: User) {
     try {
       const group = await this.prismaService.chatGroups.create({
         data: {
@@ -18,7 +18,7 @@ export class GroupService {
       });
       const GroupUsers = await this.prismaService.chatGroupUser.createMany({
         data: users.map((id) => {
-          return { groupId: group.id, userId: id };
+          return { groupId: group.id, userId: id, isAdmin: id === creater.id };
         }),
       });
       return {
@@ -57,6 +57,7 @@ export class GroupService {
       const groupUsers = await this.prismaService.chatGroupUser.findMany({
         where: {
           userId: user.id,
+          status: 'InUse',
         },
       });
       const group = await this.prismaService.chatGroups.findMany({
@@ -86,8 +87,8 @@ export class GroupService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} group`;
+  async findOne(id: number) {
+    return await this.prismaService.chatGroups.findFirst({ where: { id } });
   }
 
   async update(
@@ -134,6 +135,11 @@ export class GroupService {
           },
           select: {
             User: true,
+          },
+          orderBy: {
+            User: {
+              firstName: 'asc',
+            },
           },
         });
 

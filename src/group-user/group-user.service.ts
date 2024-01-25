@@ -28,6 +28,11 @@ export class GroupUserService {
           groupId,
           status: 'InUse',
         },
+        orderBy: {
+          User: {
+            firstName: 'asc',
+          },
+        },
       });
 
       return Promise.all(
@@ -48,7 +53,14 @@ export class GroupUserService {
     return `This action updates a #${id} groupUser`;
   }
 
-  async remove(id: number) {
-    return `This action removes a #${id} groupUser`;
+  async remove(id: number, user: any) {
+    const sth = await this.prismaService.chatGroupUser.deleteMany({
+      where: {
+        groupId: id,
+        userId: user.id,
+      },
+    });
+    console.log(sth);
+    return sth;
   }
 }
