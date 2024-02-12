@@ -14,67 +14,73 @@ export class FilesService {
     isFolder: boolean,
     name: string,
     ownerId: number,
-    file?: string,
+    file?: string | [string],
     parentId = 1,
   ) {
-    console.log('herea1');
-    if (!name || !ownerId) {
-      return {
-        status: 'Error',
-        message: 'Please Provide Name',
-      };
-    }
-    if (!isFolder && !file) {
-      return {
-        status: 'Error',
-        message: 'Please Provide File',
-      };
-    }
+    try {
+      if (!isFolder) {
+        if (Array.isArray(file)) {
+          const firstOne = await this.create(
+            isFolder,
+            name,
+            ownerId,
+            file[0],
+            parentId,
+          );
+          if ('id' in firstOne) {
+            file.slice(1).map(async (fl, idx) => {
+              await this.create(isFolder, name, ownerId, fl, firstOne.id);
+              console.log(idx, 'done');
+            });
+          } else {
+            console.error('ayul ayul. firstOne-d ID baihgui bshdee');
+          }
+          return firstOne;
+        } else {
+          const imageBuffer = Buffer.from(
+            file.replace(/^data:image\/\w+;base64,/, ''),
+            'base64',
+          );
 
-    if (!isFolder) {
-      console.log('herea2');
-      const imageBuffer = Buffer.from(
-        file.replace(/^data:image\/\w+;base64,/, ''),
-        'base64',
-      );
-      console.log('herea2a');
+          const thumbnail = await sharp(imageBuffer)
+            .resize({ width: 200 })
+            .toBuffer();
 
-      const thumbnail = await sharp(imageBuffer)
-        .resize({ width: 200 })
-        .toBuffer();
-      console.log('herea2b');
+          const base64Thumbnail = thumbnail.toString('base64');
 
-      const base64Thumbnail = thumbnail.toString('base64');
-      console.log('herea2c');
+          const FileURL = await this.s3Service.uploadFile('Files', file);
+          const thumbnail_url = await this.s3Service.uploadFile(
+            'Thumbnails',
+            base64Thumbnail,
+          );
 
-      const FileURL = await this.s3Service.uploadFile('Files', file);
-      const thumbnail_url = await this.s3Service.uploadFile(
-        'Thumbnails',
-        base64Thumbnail,
-      );
-      if (!thumbnail_url.success) return thumbnail_url;
-      if (!FileURL.success) return FileURL;
-      console.log('herea3');
+          if (!thumbnail_url.success)
+            return { status: 'Error', result: thumbnail_url };
+          if (!FileURL.success) return { status: 'Error', result: FileURL };
 
-      return this.prismaService.files.create({
-        data: {
-          isFolder,
-          name,
-          ownerId,
-          parentId,
-          url: FileURL.response.Key,
-          thumbnail_url: thumbnail_url.response.Key,
-        },
-      });
-    } else {
-      return this.prismaService.files.create({
-        data: {
-          isFolder,
-          name,
-          ownerId,
-          parentId,
-        },
-      });
+          return this.prismaService.files.create({
+            data: {
+              isFolder,
+              name,
+              ownerId,
+              parentId,
+              url: FileURL.response.Key,
+              thumbnail_url: thumbnail_url.response.Key,
+            },
+          });
+        }
+      } else {
+        return this.prismaService.files.create({
+          data: {
+            isFolder,
+            name,
+            ownerId,
+            parentId,
+          },
+        });
+      }
+    } catch (e) {
+      console.error(e);
     }
   }
 
@@ -92,6 +98,7 @@ export class FilesService {
           isFolder: true,
           url: true,
           isChecked: true,
+          created_at: true,
         },
       });
     } catch (err) {
@@ -107,7 +114,14 @@ export class FilesService {
           status: 'InUse',
         },
       });
-      return sth;
+      const ss = await this.prismaService.files.findMany({
+        where: {
+          parentId: id,
+          status: 'InUse',
+        },
+      });
+      console.log([sth].concat(ss));
+      return [sth].concat(ss);
     } catch (err) {
       Logger.error(err);
     }

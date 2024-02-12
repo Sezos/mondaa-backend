@@ -32,6 +32,18 @@ export class FilesController {
       parentId: number;
     },
   ) {
+    if (!body.name || !request.user.id) {
+      return {
+        status: 'Error',
+        message: 'Please Provide Name',
+      };
+    }
+    if (!body.isFolder && !body.file) {
+      return {
+        status: 'Error',
+        message: 'Please Provide File',
+      };
+    }
     return this.filesService.create(
       body.isFolder,
       body.name,

@@ -33,11 +33,7 @@ export class S3Service {
         response: s3Response,
       };
     } catch (e) {
-      return {
-        success: false,
-        message: 'Алдаа гарлаа.',
-        error: e,
-      };
+      throw Error('Алдаа гарлаа. Зураг Оруулж чадсангүй');
     }
   }
 
