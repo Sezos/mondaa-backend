@@ -1,4 +1,4 @@
-import { RegisterStatus } from '@prisma/client';
+import { RegisterStatus, UserRoleType } from '@prisma/client';
 
 export class UpdateUserDto {
   firstName?: string;
@@ -15,4 +15,18 @@ export class UpdateUserDto {
   workABN?: string;
   workVisaType?: string;
   status?: RegisterStatus;
+  employeeId?: string;
+  avatar?: string;
+  PhotoID?: string;
+  PhotoIDBack?: string;
+  OtherCard?: string;
+  workWhiteCard?: string;
+  workWhiteCardBack?: string;
+  email?: string;
+  workTFN?: string;
+  role?: UserRoleType;
+  isReviewed?: number;
+  experience?: string;
+  isGST?: boolean;
+  rate?: number;
 }

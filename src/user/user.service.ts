@@ -6,6 +6,7 @@ import { S3Service } from 'src/services/s3.service';
 import { PrismaService } from '../services/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from '@prisma/client';
+import { ARN } from 'aws-sdk/clients/workspacesweb';
 
 function createLink() {
   const length = 26;
@@ -632,7 +633,7 @@ export class UserService {
     });
   }
 
-  async update(user: User, updateUserDto: UpdateUserDto) {
+  async update(user: User, updateUserDto: any) {
     let result = await this.prisma.user.update({
       where: {
         id: user.id,
@@ -646,6 +647,7 @@ export class UserService {
   }
 
   async updateEmployee(id: string, updateUser: any) {
+    updateUser.rate = parseInt(updateUser.rate);
     const result = await this.prisma.user.update({
       where: {
         id: parseInt(id),
