@@ -27,7 +27,7 @@ export class FilesService {
             file[0],
             parentId,
           );
-          if ('id' in firstOne) {
+          if (firstOne && 'id' in firstOne) {
             file.slice(1).map(async (fl, idx) => {
               await this.create(isFolder, name, ownerId, fl, firstOne.id);
               console.log(idx, 'done');
